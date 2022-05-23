@@ -1,0 +1,30 @@
+{% extends "base2.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main_window.css')}}" />
+
+{% for item in videos %}
+<div class="column">
+
+    <video width="400" height="300" controls poster="{{item.path}}">
+
+        <source src="{{item.video_path}}" type="video/mp4">
+
+    </video>
+    <h2>{{item.name}}</h2>
+    {% if current_user.is_authenticated %}
+    <form action="" method="post">
+        {% if item.is_liked is false %}
+        <button class="btn btn-primary" name="button" value= "{{item.video_path}}">Like</button> <span class="badge badge-success">{{item.likes_count}}</span>
+        {% else %}
+        <button class="btn btn-danger" name="button" value= "{{'dis' + item.video_path}}">Delete Like</button><span class="badge badge-success">{{item.likes_count}}</span>
+        {% endif %}
+    </form>
+    {% endif %}
+</div>
+
+
+{% endfor %}
+
+{% endblock %}
